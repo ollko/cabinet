@@ -1,0 +1,21 @@
+{% extends 'base/__base.html' %}
+
+
+{% block content %}
+
+<div class="form-signin text-center">
+{% if request.user.is_authenticated %}
+<h3>{{ request.user.email }}</h3>
+<p><a href="{% url 'accounts:logout_then_login' %}">Зайти под другим именем</a></p>
+{% else %}
+
+	<h2 >
+		<a href="{% url 'accounts:login' %}">Войти /</a>
+		<a href="{% url 'accounts:createuser' %}">Зарегистрироваться</a>
+	</h2>
+		
+
+{% endif %}
+</div>
+
+{% endblock content %}

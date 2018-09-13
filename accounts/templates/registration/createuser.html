@@ -1,0 +1,36 @@
+{% extends "base/__base.html" %}
+
+{% load bootstrap %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>"Your username and password didn't match". Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+<div class = 'form-signin'>
+	<a href="/" class="close" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</a>
+	<h1 class="h3 font-weight-normal">Регистрация</h1>
+	<form method="post" action="{% url 'accounts:createuser' %}">
+	{% csrf_token %}
+		{{ form.email|bootstrap}}
+		{{ form.password1|bootstrap }}
+		{{ form.password2|bootstrap }}
+		
+		
+		<button type="submit" class="btn btn-success">ДАЛЕЕ</button>
+		<input type="hidden" name="next" value="{{ next }}" />
+	</form>
+</div>
+
+{% endblock %}

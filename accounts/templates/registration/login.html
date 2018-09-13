@@ -1,0 +1,55 @@
+{% extends 'base/__base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+
+
+{% if form.errors %}
+<p class="text-danger">Электронный адрес либо пароль указаны неверно. Попробуйте еще раз.</p>
+{% endif %}
+
+
+<div class="form-signin" method="post">
+    <a href="/" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </a>
+    <h1 class="h3 font-weight-normal">Вход</h1>
+    <form method="post" action="{% url 'accounts:login' %}">
+        <div class="text-left">
+            {% csrf_token %}
+            {{ form|bootstrap }}
+        </div>
+                  
+        <div class="row">
+            <div class="col-md-5 col-sm-12">
+                <button type="submit" class="btn btn-success">Войти</button>
+                
+                {% comment %}<p><a href="{% url 'accounts:password_reset' %}">Забыли пароль?</a></p>{% endcomment %}
+            </div>
+            <p class="col-md-7 col-sm-12">
+                <a href="{% url 'accounts:createuser' %}" >Зарегистрироваться</a>
+            </p>
+        </div>
+
+    </form>
+</div>
+
+{% endblock content %}
+
+<form class="form-signin" method="post">
+    {% csrf_token %}
+    <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <div class="checkbox mb-3">
+    <label>
+        <input type="checkbox" value="remember-me"> Remember me
+    </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+</form>
+
