@@ -24,7 +24,7 @@ SECRET_KEY = '2wi+m3xeh!epu#zs8*-pa&y6sn)wgqb7d7i5a)o4jbd-2921r0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ 'www.ollko-web.ru', 'ollko-web.ru', ]
 
 
 # Application definition
