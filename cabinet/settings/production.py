@@ -125,6 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = '/home/c3436/ollko-web.ru/www/static'
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
