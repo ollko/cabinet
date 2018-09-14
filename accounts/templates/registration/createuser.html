@@ -3,12 +3,18 @@
 {% load bootstrap %}
 
 {% block content %}
-
+<div class = 'form-signin'>
 {% if form.errors %}
 <p>"Your username and password didn't match". Please try again.</p>
 {% endif %}
 
+{% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
 {% if next %}
+
     {% if user.is_authenticated %}
     <p>Your account doesn't have access to this page. To proceed,
     please login with an account that has access.</p>
@@ -16,7 +22,7 @@
     <p>Please login to see this page.</p>
     {% endif %}
 {% endif %}
-<div class = 'form-signin'>
+
 	<a href="/" class="close" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</a>
