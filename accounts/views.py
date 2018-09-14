@@ -26,14 +26,25 @@ class CreateUserView(FormView):
 	success_url 	= '/'
 
 	def form_valid(self, form):
+		if self.request.recaptcha_is_valid:
+			email=form.cleaned_data['email']
+			password=form.clean_password2()
+			request=self.request
 
-		email=form.cleaned_data['email']
-		password=form.clean_password2()
-		request=self.request
-
-		user=User.objects.create_user(email,password)
-		new_user = authenticate(request, email=email, password=password)
-		login(request, user)
-		return super(CreateUserView, self).form_valid(form)
+			user=User.objects.create_user(email,password)
+			new_user = authenticate(request, email=email, password=password)
+			login(request, user)
+			return super(CreateUserView, self).form_valid(form)
+		return render(self.request, 'register.html', self.get_context_data())
 
 
+# class RegisterView(FormView):
+#     form_class = UserCreationForm
+#     template_name = 'register.html'
+ 
+#     def form_valid(self, form):
+#         # проверка валидности reCAPTCHA
+#         if self.request.recaptcha_is_valid:
+#             form.save()
+#             return render(self.request, 'register_success.html', self.get_context_data())
+#         return render(self.request, 'register.html', self.get_context_data())

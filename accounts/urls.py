@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 from accounts.views import HomeTemplateView 
 
+from .decorators import check_recaptcha
 
 
 app_name = 'accounts'
@@ -12,7 +13,7 @@ app_name = 'accounts'
 urlpatterns = [
 
 	path('', views.HomeTemplateView.as_view(), name='home'),
-	path('createuser/', views.CreateUserView.as_view(), name="createuser",),
+	path('createuser/', check_recaptcha(views.CreateUserView.as_view()), name="createuser",),
 	path('login/', auth_views.LoginView.as_view(), name="login",),
 	# path(
 	# 'password_reset/',
