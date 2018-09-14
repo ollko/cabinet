@@ -110,6 +110,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	# @property
 	# def is_active(self):
-	# 	return self.activefrom django.db import models
+	# 	return self.active
 
 

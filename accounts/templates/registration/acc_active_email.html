@@ -1,6 +1,4 @@
-{% extends "base/__base.html" %}
 
-{% block content %}
 
 {% autoescape off %}
 Hi {{ user.username }},
@@ -8,4 +6,3 @@ Please click on the link to confirm your registration,
 http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
 {% endautoescape %}
 
-{% endblock content %}

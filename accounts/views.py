@@ -44,12 +44,12 @@ class CreateUserView(FormView):
             password=form.clean_password2()
             request=self.request
 
-            user=User.objects.create_user(email,password)
+            user=User.objects.create_user(email, password, is_active = False)
             new_user = authenticate(
                 request,
                 email=email,
                 password=password,
-                is_active=False,
+                
             )
             # login(request, user)
             current_site = get_current_site(request)
@@ -61,6 +61,7 @@ class CreateUserView(FormView):
                 'token':account_activation_token.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
+
             email = EmailMessage(
                         mail_subject, message, to=[to_email]
             )
@@ -81,6 +82,6 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponse('Спасибо за за email подтверждение. Теперь вы можете зайти в свой аккаунт.')
     else:
-        return HttpResponse('Activation link is invalid!')
+        return HttpResponse('Activation link is invalid! Активационная ссылка не действительна!')
