@@ -21,7 +21,9 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 
 from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 
+from letters.models import Letter
 
 
 class HomeTemplateView(TemplateView):
@@ -54,18 +56,36 @@ class CreateUserView(FormView):
             # login(request, user)
             current_site = get_current_site(request)
             mail_subject = 'Activate your blog account.'
-            message = render_to_string('registration/acc_active_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':account_activation_token.make_token(user),
+
+            # try:
+            #     letter_content = Letter.objects.get(featured = True)
+            # except Letter.DoesNotExist:
+            #     letter_content = None
+
+            text_message = render_to_string('registration/acc_active_email.html', {
+                'user' : user,
+                'domain' : current_site.domain,
+                'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
+                'token' : account_activation_token.make_token(user),
+                
             })
+  
+            # if letter_content:
+            #     message += letter_content.content
+
             to_email = form.cleaned_data.get('email')
 
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
+            # email = EmailMessage(
+            #             mail_subject, text_message, to=[to_email]
+            # )
+
+            email = EmailMultiAlternatives(
+                        mail_subject, text_message, to=[to_email]
             )
+            html_massage = '<h1>Привет!!!</h1><p>Все прекрасно!</p>'
+            email.attach_alternative(html_massage, "text/html")
             email.send()
+            
             # return super(CreateUserView, self).form_valid(form)
             return HttpResponse('Please confirm your email address to complete the registration')
         return render(self.request, 'registration/createuser.html', self.get_context_data())

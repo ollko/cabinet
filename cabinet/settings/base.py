@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'bootstrapform',
 
     'accounts',
+    'letters',
+    'ckeditor',
 ]
 
 AUTH_USER_MODEL = 'accounts.User' # change the built-in user model to ours
@@ -136,3 +138,25 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LfoK3AUAAAAABKWqpE_jVQx1O68jpj9OyT8O8m9'
+
+CKEDITOR_CONFIGS = {
+       'default': {
+           'toolbar' : None,
+       },
+    }
+# CKEDITOR_CONFIGS = {
+#        'default': {
+#            'toolbar':[['Source', 'Link', 'Unlink', 'SpecialChar', 'Image', 'CodeSnippet']],
+#            'height': 400,
+#            'width': 900,
+#            'removePlugins': 'stylesheetparser',
+#            'extraPlugins': 'codesnippet',
+#        },
+#     }
+
+
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+CKEDITOR_JQUERY_URL = "https://code.jquery.com/jquery-3.1.1.min.js"

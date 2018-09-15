@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'bootstrapform',
 
     'accounts',
+    'letters',
+    'ckeditor',
+
 ]
 
 AUTH_USER_MODEL = 'accounts.User' # change the built-in user model to ours
