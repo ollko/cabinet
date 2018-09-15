@@ -84,8 +84,12 @@ class CreateUserView(FormView):
                 html_content = None
 
             html_massage = '''<h1>Привет, {}!</h1>{}
-                <p>Для подтверждения регистрации перейдите по сылке: {}</p>'''.format(
-                                user.email, letter.html_content, user.get_activate_url)
+                <p>Для подтверждения регистрации перейдите по сылке: {}{}</p>'''.format(
+                                                                        user.email,
+                                                                        current_site,
+                                                                        letter.html_content,
+                                                                        user.get_activate_url
+            )
 
             email.attach_alternative(html_massage, "text/html")
             email.send()
