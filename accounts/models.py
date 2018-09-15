@@ -3,16 +3,18 @@ from __future__ import unicode_literals
 from django.db import models
 
 from django.urls import reverse
-
-from phonenumber_field.modelfields import PhoneNumberField
-
-
-
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 from django.contrib.auth.models import (
 	AbstractBaseUser,
 	BaseUserManager,
 	PermissionsMixin,
 )
+
+from phonenumber_field.modelfields import PhoneNumberField
+
+from .tokens import account_activation_token
+
 
 
 class UserManager(BaseUserManager):
@@ -99,6 +101,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 		"Does the user have permissions to view the app `app_label`?"
 		# Simplest possible answer: Yes, always
 		return True
+
+		
+	@property
+	def get_activate_url(self):
+		'Возвращает ссылку на страцицу активации аккаунта'
+		return 	reverse('accounts:activate',
+					args = [urlsafe_base64_encode(force_bytes(self.pk)),
+						account_activation_token.make_token(self),
+					]
+				)
 
 	@property
 	def is_staff(self):

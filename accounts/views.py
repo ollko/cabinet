@@ -57,22 +57,13 @@ class CreateUserView(FormView):
             current_site = get_current_site(request)
             mail_subject = 'Activate your blog account.'
 
-            # try:
-            #     letter_content = Letter.objects.get(featured = True)
-            # except Letter.DoesNotExist:
-            #     letter_content = None
-
             text_message = render_to_string('registration/acc_active_email.html', {
                 'user' : user,
                 'domain' : current_site.domain,
                 'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
                 'token' : account_activation_token.make_token(user),
-                
             })
   
-            # if letter_content:
-            #     message += letter_content.content
-
             to_email = form.cleaned_data.get('email')
 
             # email = EmailMessage(
@@ -82,7 +73,20 @@ class CreateUserView(FormView):
             email = EmailMultiAlternatives(
                         mail_subject, text_message, to=[to_email]
             )
-            html_massage = '<h1>Привет!!!</h1><p>Все прекрасно!</p>'
+
+            try:
+                letter = Letter.objects.get(featured = True)
+            except Letter.DoesNotExist:
+                letter = None
+            if letter:
+                html_content = letter.html_content
+            else:
+                html_content = None
+
+            html_massage = '''<h1>Привет, {}!</h1>{}
+                <p>Для подтверждения регистрации перейдите по сылке: {}</p>'''.format(
+                                user.email, letter.html_content, user.get_activate_url)
+
             email.attach_alternative(html_massage, "text/html")
             email.send()
             

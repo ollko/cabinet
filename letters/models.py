@@ -6,9 +6,17 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Letter(models.Model):
-    title       = models.CharField(max_length=220)
-    content     = RichTextUploadingField( 'Текст письма подтверждения регистрации', )
-    featured    = models.BooleanField(default=False)
+    title           =   models.CharField(max_length=220)
+    text_content    =   models.TextField(
+                            'Текст письма подтверждения регистрации в формате "text"',
+                            blank = True, null = True, default = None,
+                        )
+    html_content    =   models.TextField(
+                            'Текст письма подтверждения регистрации в формате "html"',
+                            blank = True, null = True, default = None,
+                        )
+    # html_content    = RichTextUploadingField( 'Текст письма подтверждения регистрации в формате "text"', )
+    featured        =   models.BooleanField(default=False)
 
 
     def save(self, *args, **kwargs):
