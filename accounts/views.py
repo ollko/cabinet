@@ -47,56 +47,52 @@ class CreateUserView(FormView):
             request=self.request
 
             user=User.objects.create_user(email, password, is_active = False)
-            new_user = authenticate(
-                request,
-                email=email,
-                password=password,
-                
-            )
-            # login(request, user)
+           
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activate your upgram.ru account. Активация аккаунта на upgram.ru.'
             
-            text_message = render_to_string('registration/acc_active_email.html', {
-                'user' : user,
-                'domain' : current_site.domain,
-                'uid' : str( urlsafe_base64_encode(force_bytes(user.pk)) )[2:-1],
-                'token' : account_activation_token.make_token(user),
-            })
-  
-            to_email = form.cleaned_data.get('email')
-
-            email = EmailMessage(
-                        mail_subject, text_message, to=[to_email]
-            )
-
-            # email = EmailMultiAlternatives(
-            #             mail_subject, text_message, to=[to_email]
-            # )
-
             try:
                 letter = Letter.objects.get(featured = True)
             except Letter.DoesNotExist:
                 letter = None
             if letter:
-                html_content = letter.html_content
+                text_content, html_content = letter.text_content, letter.html_content
             else:
-                html_content = None
-
-            html_massage = '''<h1>Привет, {}!</h1>{}
-                <p>Для подтверждения регистрации перейдите по сылке: {}{}</p>'''.format(
-                                                                        user.email,
+                text_content, html_content = (None, None)
+                
+            
+            html_massage = '{} <p>Для подтверждения регистрации перейдите по сылке: {}{}</p>'.format(
                                                                         letter.html_content,
-                                                                        current_site,                                                                       
+                                                                        current_site,        
                                                                         user.get_activate_url
             )
 
-            # email.attach_alternative(html_massage, "text/html")
+            text_message = render_to_string('registration/acc_active_email.html', {
+                'user'          : user,
+                'domain'        : current_site.domain,
+                'uid'           : str( urlsafe_base64_encode(force_bytes(user.pk)) )[2:-1],
+                'token'         : account_activation_token.make_token(user),
+                "text_content"  : letter.text_content,
+            })
+  
+            to_email = form.cleaned_data.get('email')
+
+            # email = EmailMessage(
+            #             mail_subject, text_message, to=[to_email]
+            # )
+
+            email = EmailMultiAlternatives(
+                        mail_subject, text_message, to=[to_email]
+            )
+
+            email.attach_alternative(html_massage, "text/html")
             email.send()
             
             # return super(CreateUserView, self).form_valid(form)
-            return HttpResponse('Please confirm your email address to complete the registration')
+            # return HttpResponse('Please confirm your email address to complete the registration.\n На вашу почту отправлено письмо. Для подтверждения регистрации пройдите по ссылке в письме  ')
+            return redirect ('accounts:acc_confirm')
         return render(self.request, 'registration/createuser.html', self.get_context_data())
+
 
 
 def activate(request, uidb64, token):
@@ -109,8 +105,8 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        # login(request, user)
         # return redirect('home')
-        return HttpResponse('Спасибо за за email подтверждение. Теперь вы можете зайти в свой аккаунт.')
+        return redirect('accounts:login')
     else:
         return HttpResponse('Activation link is invalid! Активационная ссылка не действительна!')

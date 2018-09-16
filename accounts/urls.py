@@ -3,6 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 from accounts.views import HomeTemplateView 
+from django.views.generic import TemplateView
 
 from .decorators import check_recaptcha
 
@@ -21,6 +22,7 @@ urlpatterns = [
     # auth_views.PasswordResetView.as_view(template_name='registration/password_reset.html'),
     # name='password_reset'
     # ),
+    path('activateconfirm/', TemplateView.as_view( template_name = 'registration/acc_confirm.html'), name='acc_confirm' ),
     path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
   
     path('logout/', auth_views.LogoutView.as_view(), name="logout",),

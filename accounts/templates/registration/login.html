@@ -4,9 +4,7 @@
 {% block content %}
 
 
-{% if form.errors %}
-<p class="text-danger">Электронный адрес либо пароль указаны неверно. Попробуйте еще раз.</p>
-{% endif %}
+
 
 
 <div class="form-signin" method="post">
@@ -18,19 +16,36 @@
         <div class="text-left">
             {% csrf_token %}
             {{ form|bootstrap }}
+            
         </div>
-                  
+        {% if form.errors %}
+            <div class="text-left text-danger">Электронный адрес либо пароль указаны неверно. Попробуйте еще раз.</p>
+        {% endif %}          
         <div class="row">
             <div class="col-md-5 col-sm-12">
-                <button type="submit" class="btn btn-success">Войти</button>
-                
-                <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+                <button type="submit" class="btn btn-success">Войти</button>         
             </div>
-            <p class="col-md-7 col-sm-12">
-                <a href="{% url 'accounts:createuser' %}" >Зарегистрироваться</a>
-            </p>
+            <div class="col-md-7">
+                <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+            </div>
         </div>
-
+        {% comment %}
+        <div class="row">
+            <div class="col-md-6">
+                <p><input type="checkbox" name="rememberme">Запомнить меня</p>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+            </div>
+        </div>
+        {% endcomment %}
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">
+                    <a href="{% url 'accounts:createuser' %}" >Зарегистрироваться</a>
+                </p>
+            </div>         
+        </div>
     </form>
 </div>
 
