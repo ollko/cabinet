@@ -56,23 +56,23 @@ class CreateUserView(FormView):
             # login(request, user)
             current_site = get_current_site(request)
             mail_subject = 'Activate your blog account.'
-
+            
             text_message = render_to_string('registration/acc_active_email.html', {
                 'user' : user,
                 'domain' : current_site.domain,
-                'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
+                'uid' : str( urlsafe_base64_encode(force_bytes(user.pk)) )[2:-1],
                 'token' : account_activation_token.make_token(user),
             })
   
             to_email = form.cleaned_data.get('email')
 
-            # email = EmailMessage(
-            #             mail_subject, text_message, to=[to_email]
-            # )
-
-            email = EmailMultiAlternatives(
+            email = EmailMessage(
                         mail_subject, text_message, to=[to_email]
             )
+
+            # email = EmailMultiAlternatives(
+            #             mail_subject, text_message, to=[to_email]
+            # )
 
             try:
                 letter = Letter.objects.get(featured = True)
@@ -91,7 +91,7 @@ class CreateUserView(FormView):
                                                                         user.get_activate_url
             )
 
-            email.attach_alternative(html_massage, "text/html")
+            # email.attach_alternative(html_massage, "text/html")
             email.send()
             
             # return super(CreateUserView, self).form_valid(form)
@@ -105,6 +105,7 @@ def activate(request, uidb64, token):
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
+
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
