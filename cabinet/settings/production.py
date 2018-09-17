@@ -140,4 +140,4 @@ EMAIL_PORT = 25
 
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
-DEFAULT_FROM_EMAIL = 'korotkaya.olga@yandex.ru'
+DEFAULT_FROM_EMAIL = 'upgram@upgram.ru'
