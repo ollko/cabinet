@@ -61,7 +61,7 @@ class CreateUserView(FormView):
                 text_content, html_content = (None, None)
                 
             
-            html_massage = '{} <p>Для подтверждения регистрации перейдите по сылке: {}{}</p>'.format(
+            html_massage = '{} <p>Для подтверждения регистрации перейдите по сылке: http://{}{}</p>'.format(
                                                                         letter.html_content,
                                                                         current_site,        
                                                                         user.get_activate_url
@@ -107,6 +107,6 @@ def activate(request, uidb64, token):
         user.save()
         # login(request, user)
         # return redirect('home')
-        return redirect('accounts:login')
+        return redirect('accounts:link_for_login')
     else:
         return HttpResponse('Activation link is invalid! Активационная ссылка не действительна!')

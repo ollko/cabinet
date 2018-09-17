@@ -22,6 +22,11 @@ urlpatterns = [
     # auth_views.PasswordResetView.as_view(template_name='registration/password_reset.html'),
     # name='password_reset'
     # ),
+    path(
+        'linkforlogin/',
+        TemplateView.as_view( template_name = 'registration/link_for_login.html'),
+        name='link_for_login' 
+    ),
     path('activateconfirm/', TemplateView.as_view( template_name = 'registration/acc_confirm.html'), name='acc_confirm' ),
     path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
   

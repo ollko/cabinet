@@ -1,0 +1,10 @@
+{% extends 'base/__base.html' %}
+
+
+{% block content %}
+<div class='form-signin text-center'>
+<p>Вы успешно подтвердили свой email! Теперь вы пожете войти в свой аккаунт на upgram.ru</p>
+<a class="btn btn-success" href="{% url 'accounts:login' %}" role="button">Войти в свой аккаунт</a>
+
+</div>
+{% endblock %}
