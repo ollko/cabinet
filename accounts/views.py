@@ -3,12 +3,11 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.generic import TemplateView, FormView
 
-from accounts.forms import  UserAdminCreationForm, UserLoginForm
-
 from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.views import LoginView
 
 User = get_user_model()
+
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -24,6 +23,8 @@ from django.core.mail import EmailMessage
 from django.core.mail import EmailMultiAlternatives
 
 from letters.models import Letter
+from accounts.forms import  UserAdminCreationForm, UserLoginForm, ProfileForm
+from .models import Profile
 
 
 class HomeTemplateView(TemplateView):
@@ -38,16 +39,21 @@ class CreateUserView(FormView):
 
     template_name   = 'registration/createuser.html'
     form_class      = UserAdminCreationForm
+    # profile_form_class     = ProfileForm
     success_url     = '/'
 
     def form_valid(self, form):
         if self.request.recaptcha_is_valid:
-            email=form.cleaned_data['email']
-            password=form.clean_password2()
-            request=self.request
+            email = form.cleaned_data['email']
+            password = form.clean_password2()
+            request = self.request
 
-            user=User.objects.create_user(email, password, is_active = False)
-           
+            user = User.objects.create_user(email, password, is_active = False)
+
+            phone = form.cleaned_data['phone']
+            p = Profile(user = user, phone =phone)
+            p.save()
+
             current_site = get_current_site(request)
             mail_subject = 'Activate your upgram.ru account. Активация аккаунта на upgram.ru.'
             

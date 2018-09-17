@@ -12,7 +12,6 @@ from django.contrib.auth.models import (
 )
 
 from phonenumber_field.modelfields import PhoneNumberField
-
 from .tokens import account_activation_token
 
 
@@ -125,3 +124,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	# 	return self.active
 
 
+class Profile(models.Model):
+    user            = models.OneToOneField(User,verbose_name='Эл.почта', on_delete = models.CASCADE,)
+    phone           = models.CharField(verbose_name='Tелефон:', max_length = 12,)
+ 
