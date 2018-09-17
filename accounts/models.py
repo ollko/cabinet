@@ -64,7 +64,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-	email 				= models.EmailField(verbose_name = "Эл. почта:", max_length=255, unique=True)
+	email 				= models.EmailField(verbose_name = "Эл.почта", max_length=255, unique=True)
 
 	active 				= models.BooleanField(default=False) # can login
 	staff				= models.BooleanField(default=False) # staff user non super

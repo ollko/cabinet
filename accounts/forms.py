@@ -15,8 +15,9 @@ class UserLoginForm(forms.ModelForm):
 class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    password1 = forms.CharField(label='Пароль:', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Подтверждение пароля:', widget=forms.PasswordInput)
+    email       = forms.CharField(label='Эл.почта',)
+    password1   = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    password2   = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput)
 
     class Meta:
         model = User
