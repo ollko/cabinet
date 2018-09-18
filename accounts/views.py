@@ -73,7 +73,7 @@ class CreateUserView(FormView):
                                                                         user.get_activate_url
             )
 
-            text_message = render_to_string('registration/acc_active_email.html', {
+            text_message = render_to_string('accounts/acc_active_email.html', {
                 'user'          : user,
                 'domain'        : current_site.domain,
                 'uid'           : str( urlsafe_base64_encode(force_bytes(user.pk)) )[2:-1],
