@@ -126,5 +126,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     user            = models.OneToOneField(User,verbose_name='Эл.почта', on_delete = models.CASCADE,)
-    phone           = models.CharField(verbose_name='Tелефон:', max_length = 12,)
+    phone           = PhoneNumberField(verbose_name='Tелефон:',)
  
