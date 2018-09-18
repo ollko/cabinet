@@ -38,11 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'phonenumber_field',
-    'bootstrapform',
+    'crispy_forms',
+    
 
     'accounts',
     'letters',
     'ckeditor',
+
 ]
 
 AUTH_USER_MODEL = 'accounts.User' # change the built-in user model to ours

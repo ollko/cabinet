@@ -1,7 +1,6 @@
 {% extends "base/__base.html" %}
 
-{% load bootstrap %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class = 'form-signin'>
 
@@ -12,11 +11,8 @@
 	<h1 class="h3 font-weight-normal">Регистрация</h1>
 	<form method="post" action="{% url 'accounts:createuser' %}">
 	{% csrf_token %}
-		{{ form.email|bootstrap }}
-		{{ form.password1|bootstrap  }}
-		{{ form.password2|bootstrap  }}
-		{{ form.phone|bootstrap  }}
-
+	{{ form|crispy }}
+		
 		
 		<script src='https://www.google.com/recaptcha/api.js?hl=ru'></script>
 		
