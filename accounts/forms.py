@@ -22,8 +22,9 @@ class UserAdminCreationForm(forms.ModelForm):
     password1   = forms.CharField(label = 'Пароль', widget=forms.PasswordInput)
     password2   = forms.CharField(label = 'Подтверждение пароля', widget=forms.PasswordInput)
     phone       = forms.RegexField(
+        label = 'Телефон',
         regex=r'^\+?7?\d{10,10}$', 
-        error_messages={'invalid': "Телефон следует заносить в формате: '+71234567890'"
+        error_messages={'invalid': "Телефон следует заносить в формате: +71234567890"
         })
 
 

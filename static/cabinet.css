@@ -43,3 +43,12 @@ body {
   border-top-right-radius: 0;
 }
 
+.recuptcha-errors{
+  font-size: 80%;
+  color: #dc3545;
+  font-weight: bolder;
+  margin: -1.2em 0 1em; 
+}
+.pass-forget, .p-registration{
+  margin-top: .5em;
+}

@@ -3,24 +3,37 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class = 'form-signin'>
-
-
-	<a href="/" class="close" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</a>
-	<h1 class="h3 font-weight-normal">Регистрация</h1>
-	<form method="post" action="{% url 'accounts:createuser' %}">
-	{% csrf_token %}
-	{{ form|crispy }}
-		
-		
-		<script src='https://www.google.com/recaptcha/api.js?hl=ru'></script>
-		
-			<div class="form-group g-recaptcha" data-sitekey="6LfoK3AUAAAAAE830o8CEnYNbRkCB35ijAyjsRM6"  style="transform:scale(0.955);transform-origin:0 0;"></div>
-     
-		<button type="submit" class="btn btn-success">ДАЛЕЕ</button>
-		<input type="hidden" name="next" value="{{ next }}" />
-	</form>
+    <a href="/" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </a>
+    <h1 class="h3 font-weight-normal text-center">Регистрация</h1>
+    <form method="post" action="{% url 'accounts:createuser' %}" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }}
+        
+        
+        <script src='https://www.google.com/recaptcha/api.js?hl=ru'></script>
+            <div class="form-group g-recaptcha" data-sitekey="6LfoK3AUAAAAAE830o8CEnYNbRkCB35ijAyjsRM6"  style="transform:scale(0.955);transform-origin:0 0;"></div>
+        <div class='recuptcha-errors'>
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-success">Далее</button>         
+            </div>
+            <div class="col-md-7">
+                <div class="pass-forget">
+                    <a href="{% url 'accounts:login' %}">Уже есть аккаунт?</a>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
 </div>
 
 {% endblock %}
