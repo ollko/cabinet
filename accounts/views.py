@@ -37,7 +37,7 @@ class MyLoginView(LoginView):
 
 class CreateUserView(FormView):
 
-    template_name   = 'registration/createuser.html'
+    template_name   = 'accounts/createuser.html'
     form_class      = UserAdminCreationForm
     # profile_form_class     = ProfileForm
     success_url     = '/'
@@ -97,7 +97,7 @@ class CreateUserView(FormView):
             # return super(CreateUserView, self).form_valid(form)
             # return HttpResponse('Please confirm your email address to complete the registration.\n На вашу почту отправлено письмо. Для подтверждения регистрации пройдите по ссылке в письме  ')
             return redirect ('accounts:acc_confirm')
-        return render(self.request, 'registration/createuser.html', self.get_context_data())
+        return render(self.request, 'accounts/createuser.html', self.get_context_data())
 
 
 
