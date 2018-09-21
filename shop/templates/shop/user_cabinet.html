@@ -18,58 +18,58 @@
 
   <hr>
 
-  <h3>Текущие лицензии</h3>
-{% if  user.user_lisences.all %}  
-  <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">номер лицензии</th>
-      <th scope="col">hwid оборудования</th>
-      <th scope="col">дата начала</th>
-      <th scope="col">дата окончания</th>
-      <th scope="col">статус</th>
-    </tr>
-  </thead>
-  <tbody>
+  <h3>Текущие лицензии{% if  not user.user_lisences.all %}. <small>У вас пока еще нет ни одной лицензии</small> </h3>
+  {% else %} </h3> 
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">номер лицензии</th>
+          <th scope="col">hwid оборудования</th>
+          <th scope="col">дата начала</th>
+          <th scope="col">дата окончания</th>
+          <th scope="col">статус</th>
+        </tr>
+      </thead>
+      <tbody>
 
-    {% for lisence in user.user_lisences.all %}
-    <tr>
-      <td>{{ lisence.number }}</td>
-      <td>{{ lisence.hwid }}</td>
+        {% for lisence in user.user_lisences.all %}
+        <tr>
+          <td>{{ lisence.number }}</td>
+          <td>{{ lisence.hwid }}</td>
+          
+          <td>{{ lisence.start }}</td>
+          <td>{{ lisence.end }}</td>
+          
+          <td>{{ lisence.is_active }}</td>
+        </tr>
+        {% endfor %}
       
-      <td>{{ lisence.start }}</td>
-      <td>{{ lisence.end }}</td>
-      
-      <td>{{ lisence.is_active }}</td>
-    </tr>
-    {% endfor %}
-  
-  </tbody>
-</table>
+      </tbody>
+    </table>
 
   <hr>
-{% endif %}
-{% if  user.user_payments.all %}
-  <h4>История платежей</h4>
+  {% endif %}
 
-  <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Дата</th>
-      <th scope="col">Сумма</th>
-    </tr>
-  </thead>
-  <tbody>
+  <h4>История платежей{% if  not user.user_payments.all %}. <small>У вас пока нет платежей</small></h4>
+  {% else %}</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Дата</th>
+          <th scope="col">Сумма</th>
+        </tr>
+      </thead>
+      <tbody>
 
-    {% for payment in user.user_payments.all %}
-    <tr>
-      <td>{{ payment.created }}</td>      
-      <td>{{ payment.amount }} руб.</td>
-    </tr>
-    {% endfor %}
-  
-  </tbody>
-</table>
-{% endif %}    
+        {% for payment in user.user_payments.all %}
+        <tr>
+          <td>{{ payment.created }}</td>      
+          <td>{{ payment.amount }} руб.</td>
+        </tr>
+        {% endfor %}
+      
+      </tbody>
+    </table>
+  {% endif %}    
 
 {% endblock content %}

@@ -88,26 +88,9 @@ class CreateUserView(FormView):
                                                                               
             html_message = html_content[0] + activation_link + html_content[1]
             text_message = text_content[0] + activation_link + text_content[1]
-
-            # html_massage = '{} <p>Для подтверждения регистрации перейдите по сылке: http://{}{}</p>'.format(
-            #                                                             letter.html_content,
-            #                                                             current_site,        
-            #                                                             user.get_activate_url
-            # )
-
-            # text_message = render_to_string('accounts/acc_active_email.html', {
-            #     'user'          : user,
-            #     'domain'        : current_site.domain,
-            #     'uid'           : str( urlsafe_base64_encode(force_bytes(user.pk)) )[2:-1],
-            #     'token'         : account_activation_token.make_token(user),
-            #     "text_content"  : letter.text_content,
-            # })
   
             to_email = form.cleaned_data.get('email')
 
-            # email = EmailMessage(
-            #             mail_subject, text_message, to=[to_email]
-            # )
 
             email = EmailMultiAlternatives(
                         mail_subject, text_message, to=[to_email]
