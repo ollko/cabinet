@@ -19,6 +19,12 @@ class Letter(models.Model):
     featured        =   models.BooleanField(default=False)
 
 
+    class Meta:
+            ordering            = ( 'title', )
+            verbose_name        = 'Шаблон письма подтверждения аккаунта по email'
+            verbose_name_plural = 'Шаблоны писем подтверждения аккаунта по email'
+
+
     def save(self, *args, **kwargs):
         if self.featured:
             qs = Letter.objects.filter(featured=True).exclude(pk=self.pk)

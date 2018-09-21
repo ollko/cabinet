@@ -39,12 +39,12 @@ INSTALLED_APPS = [
 
     'phonenumber_field',
     'crispy_forms',
+    'ckeditor',
     
 
     'accounts',
     'letters',
-    'ckeditor',
-
+    'shop',
 ]
 
 AUTH_USER_MODEL = 'accounts.User' # change the built-in user model to ours

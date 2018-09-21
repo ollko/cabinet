@@ -3,9 +3,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.generic import TemplateView, FormView
 
-from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.views import LoginView
 
+from django.contrib.auth import get_user_model, authenticate, login
 User = get_user_model()
 
 
@@ -21,19 +21,34 @@ from .tokens import account_activation_token
 
 from django.core.mail import EmailMessage
 from django.core.mail import EmailMultiAlternatives
+from django.urls import reverse
+
 
 from letters.models import Letter
 from accounts.forms import  UserAdminCreationForm, UserLoginForm, ProfileForm
 from .models import Profile
 
 
-class HomeTemplateView(TemplateView):
-    template_name = "base/home.html"
+class StartTemplateView(TemplateView):
+    template_name = "base/start.html"
     
 
 
-class MyLoginView(LoginView):
-    form_class      = UserLoginForm
+class CabinetLoginView(LoginView):
+    template_name   = 'accounts/login.html'
+
+    def form_valid(self, form):
+        self.form = form
+        return super(CabinetLoginView, self).form_valid( form )
+
+    def get_success_url(self):
+        user = self.form.get_user()
+        self.success_url = reverse('shop:user-sabinet', args=[user.id])
+        print(self.success_url)
+        print(super(CabinetLoginView, self).get_success_url())
+        print(self.request.GET)
+        return self.success_url
+        # return super(CabinetLoginView, self).get_success_url()
 
 class CreateUserView(FormView):
 
@@ -55,7 +70,7 @@ class CreateUserView(FormView):
             p.save()
 
             current_site = get_current_site(request)
-            mail_subject = 'Activate your upgram.ru account. Активация аккаунта на upgram.ru.'
+            mail_subject = 'Activate your upgram.ru account. Активация аккаунта на upgram.ru'
             
             try:
                 letter = Letter.objects.get(featured = True)
@@ -112,7 +127,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         # login(request, user)
-        # return redirect('home')
+        # return redirect('start')
         return redirect('accounts:link_for_login')
     else:
         return HttpResponse('Activation link is invalid! Активационная ссылка не действительна!')

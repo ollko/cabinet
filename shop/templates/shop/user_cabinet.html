@@ -1,0 +1,75 @@
+{% extends 'base/__base2.html' %}
+{% load tz %}
+
+{% block title %}Личный кабинет{% endblock title %}
+
+
+{% block content %}
+
+  <h1>Личный кабинет</h1>
+
+  <p class="lead">Пользователь: {{ user.email }}</p>
+  <p class="lead">Телефон: {{ user.profile }}</p>
+  <a href="{% url 'accounts:start' %}"><small>сменить пользователя</small></a>
+
+  <hr>
+
+  <h2>Купить лицензию</h2>
+
+  <hr>
+
+  <h3>Текущие лицензии</h3>
+{% if  user.user_lisences.all %}  
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">номер лицензии</th>
+      <th scope="col">hwid оборудования</th>
+      <th scope="col">дата начала</th>
+      <th scope="col">дата окончания</th>
+      <th scope="col">статус</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for lisence in user.user_lisences.all %}
+    <tr>
+      <td>{{ lisence.number }}</td>
+      <td>{{ lisence.hwid }}</td>
+      
+      <td>{{ lisence.start }}</td>
+      <td>{{ lisence.end }}</td>
+      
+      <td>{{ lisence.is_active }}</td>
+    </tr>
+    {% endfor %}
+  
+  </tbody>
+</table>
+
+  <hr>
+{% endif %}
+{% if  user.user_payments.all %}
+  <h4>История платежей</h4>
+
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Дата</th>
+      <th scope="col">Сумма</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for payment in user.user_payments.all %}
+    <tr>
+      <td>{{ payment.created }}</td>      
+      <td>{{ payment.amount }} руб.</td>
+    </tr>
+    {% endfor %}
+  
+  </tbody>
+</table>
+{% endif %}    
+
+{% endblock content %}

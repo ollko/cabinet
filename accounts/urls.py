@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 
-from accounts.views import HomeTemplateView 
 from django.views.generic import TemplateView
 
 from .decorators import check_recaptcha
@@ -13,7 +12,7 @@ app_name = 'accounts'
 
 urlpatterns = [
 
-    path('', views.HomeTemplateView.as_view(), name='home'),
+    path('', views.StartTemplateView.as_view(), name='start'),
     path('createuser/',
         check_recaptcha(views.CreateUserView.as_view()),
         name="createuser",
@@ -24,7 +23,7 @@ urlpatterns = [
         name='link_for_login' 
     ),
     path(
-        'login/', auth_views.LoginView.as_view(template_name = 'accounts/login.html'),
+        'login/', views.CabinetLoginView.as_view(),
         name="login",
         ),
     path(
