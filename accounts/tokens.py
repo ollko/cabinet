@@ -43,8 +43,7 @@ class TokenGenerator(PasswordResetTokenGenerator):
             password_reset_timeout_days = Setting.objects.filter(name__icontains = 'Срок действия ссылки')[0]
         except IndexError:
             password_reset_timeout_days = settings.PASSWORD_RESET_TIMEOUT_DAYS
-        print('password_reset_timeout_days = ',password_reset_timeout_days)
-        print('type(settings.PASSWORD_RESET_TIMEOUT_DAYS) = ',type(settings.PASSWORD_RESET_TIMEOUT_DAYS))
+        
         if (self._num_days(self._today()) - ts) > password_reset_timeout_days.value:
             return False
 
