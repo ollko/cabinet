@@ -82,7 +82,7 @@ class CreateUserView(FormView):
                 text_content, html_content = (None, None)
                 
             activation_link = 'http://{}{}'.format( current_site, user.get_activate_url )
-            print('activation-link')
+
             html_content = letter.html_content.split('[activation-link]')
             text_content = letter.text_content.split('[activation-link]')
                                                                               

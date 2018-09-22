@@ -35,3 +35,14 @@ class Letter(models.Model):
 
     def __str__(self):
         return self.title
+
+class Setting(models.Model):
+    name = models.CharField('Название', max_length=100)
+    value = models.IntegerField('Значение (в днях)')
+    class Meta:
+            ordering            = ( 'name', )
+            verbose_name        = 'Настройка'
+            verbose_name_plural = 'Настройки'
+
+    def __str__(self):
+        return self.name
