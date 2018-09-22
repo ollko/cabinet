@@ -21,10 +21,20 @@ urlpatterns = [
         'linkforlogin/',
         TemplateView.as_view( template_name = 'accounts/link_for_login.html'),
         name='link_for_login' 
-    ),
+        ),
     path(
         'login/', views.CabinetLoginView.as_view(),
         name="login",
+        ),
+    path(
+        'change-password/',
+        # auth_views.PasswordChangeView.as_view(),
+        auth_views.PasswordChangeView.as_view(template_name='accounts/password_change_form.html'),
+        name = 'change_password'
+        ),
+    path('password_change/done/',
+        auth_views. PasswordChangeDoneView.as_view(template_name='accounts/password_change_done.html'),
+        name='password_change_done'
         ),
     path(
         'password_reset/',
