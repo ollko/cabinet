@@ -122,7 +122,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # @property
     # def is_active(self):
     #   return self.active
-
+    @property
+    def get_name_from_email(self):
+        return self.email.split('@')[0]
 
 class Profile(models.Model):
     user            = models.OneToOneField(

@@ -1,4 +1,5 @@
 {% extends 'base/__base2.html' %}
+{% load static %}
 {% load tz %}
 {% load crispy_forms_tags %}
 
@@ -19,8 +20,8 @@
   
   <h1 class='text-center'>Личный кабинет</h1>
   <div class='text-right'>
-    <p class="lead"><a style="text-decoration:none" tabindex="0" data-toggle="popover" data-container="body" data-placement="top"  data-html="true" href="#" id="authUser" data-trigger="click hover"><span class="icon-user" ></span><p class="lead">{{ user.email }}</p></a></p>
-    <p class="lead">{{ user.profile }}</p>
+    <a style="text-decoration:none" tabindex="0" data-toggle="popover" data-container="body" data-placement="top"  data-html="true" href="#" id="authUser" data-trigger="click hover"><span class="icon-user" ></span>{{ user.get_name_from_email }}</a>
+    <div class="lead"><small>{{ user.profile }}</small></div>
 
     <div id="popover-content-authUser" style="display: none">      
       <a class="dropdown-item text-center" href="">сменить номер телефона</a>
@@ -105,33 +106,8 @@
 {% endblock content %}
 
 {% block js %}
-{{ block.super }}
-
-<script>
-$( "select" )
-  .change(function () {
-    var str = "";
-    $( "select option:selected" ).each(function() {
-      str += $( this ).text() + " ";
-    });
-    $( "div.product-price" ).text( str );
-  })
-  .change();
-
-//Popovers initialization
-$("[data-toggle=popover]").each(function(i, obj) {
-
-$(this).popover({
-  // container: 'body',
-  delay: { "show": 500, "hide": 100},
-  animation:true,
-  html: true,
-  content: function() {
-  var id = $(this).attr('id')
-  return $('#popover-content-' + id).html();
-  }
-  });
-});
-
-</script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script src="{% static 'js/cabinet.js' %}"></script>
 {% endblock js %}
