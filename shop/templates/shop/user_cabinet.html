@@ -4,18 +4,33 @@
 
 {% block title %}Личный кабинет{% endblock title %}
 
-
+<h1 class='text-center'>Личный кабинет</h1>
+  <div class='text-right'>
+    <p class="lead">{{ user.email }}</p>
+    <p class="lead">{{ user.profile }}</p>
+    <a href=""><small>сменить номер телефона</small></a>
+    <br>
+    <a href="{% url 'accounts:change_password' %}"><small>сменить пароль</small></a>
+    <br>
+    <a href="{% url 'accounts:logout' %}"><small>выход</small></a>
+  </div>
 {% block content %}
 
-  <h1>Личный кабинет</h1>
+  
+  <h1 class='text-center'>Личный кабинет</h1>
+  <div class='text-right'>
+    <p class="lead"><a style="text-decoration:none" tabindex="0" data-toggle="popover" data-container="body" data-placement="top"  data-html="true" href="#" id="authUser" data-trigger="click hover"><span class="icon-user" ></span><p class="lead">{{ user.email }}</p></a></p>
+    <p class="lead">{{ user.profile }}</p>
 
-  <p class="lead">{{ user.email }}</p>
-  <p class="lead">{{ user.profile }}</p>
-  <a href=""><small>сменить номер телефона</small></a>
-  <br>
-  <a href="{% url 'accounts:change_password' %}"><small>сменить пароль</small></a>
-  <br>
-  <a href="{% url 'accounts:logout' %}"><small>выход</small></a>
+    <div id="popover-content-authUser" style="display: none">      
+      <a class="dropdown-item text-center" href="">сменить номер телефона</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item text-center" href="{% url 'accounts:change_password' %}">сменить пароль</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item text-center" href="{% url 'accounts:logout' %}">выход</a>
+    </div>
+  </div>
+  
 
   <hr>
   <h3>Купить лицензию</h3>
@@ -102,5 +117,21 @@ $( "select" )
     $( "div.product-price" ).text( str );
   })
   .change();
+
+//Popovers initialization
+$("[data-toggle=popover]").each(function(i, obj) {
+
+$(this).popover({
+  // container: 'body',
+  delay: { "show": 500, "hide": 100},
+  animation:true,
+  html: true,
+  content: function() {
+  var id = $(this).attr('id')
+  return $('#popover-content-' + id).html();
+  }
+  });
+});
+
 </script>
 {% endblock js %}
