@@ -1,0 +1,17 @@
+{% extends 'base/__base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Хотите сменить номер телефона?{% endblock %}
+
+{% block content %}
+<div class="form-signin">
+	<h1>Хотите сменить номер телефона?</h1>
+    <p>Введите новый номер</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class="btn btn-primary" value="Сохранить новый номер">   
+</form>
+</div>
+{% endblock content %}

@@ -24,7 +24,7 @@
     <div class="lead"><small>{{ user.profile }}</small></div>
 
     <div id="popover-content-authUser" style="display: none">      
-      <a class="dropdown-item text-center" href="">сменить номер телефона</a>
+      <a class="dropdown-item text-center" href="{% url 'accounts:change_profile' user.pk %}">сменить номер телефона</a>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item text-center" href="{% url 'accounts:change_password' %}">сменить пароль</a>
       <div class="dropdown-divider"></div>

@@ -17,6 +17,10 @@ urlpatterns = [
         check_recaptcha(views.CreateUserView.as_view()),
         name="createuser",
         ),
+    path('change-profile/<int:pk>/',
+        views.ProfileUpdateView.as_view(),
+        name="change_profile",
+        ),
     path(
         'linkforlogin/',
         TemplateView.as_view( template_name = 'accounts/link_for_login.html'),

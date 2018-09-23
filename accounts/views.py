@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, UpdateView
 
 from django.contrib.auth.views import LoginView
 
@@ -44,9 +44,7 @@ class CabinetLoginView(LoginView):
     def get_success_url(self):
         user = self.form.get_user()
         self.success_url = reverse('shop:user-sabinet', args=[user.id])
-        print(self.success_url)
-        print(super(CabinetLoginView, self).get_success_url())
-        print(self.request.GET)
+
         return self.success_url
         # return super(CabinetLoginView, self).get_success_url()
 
@@ -121,3 +119,15 @@ def activate(request, uidb64, token):
         return redirect('accounts:link_for_login')
     else:
         return HttpResponse('Activation link is invalid! Активационная ссылка не действительна!')
+
+
+class ProfileUpdateView(UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    template_name = 'accounts/profile_update.html'
+
+    def get_success_url(self):
+        user = self.object
+        self.success_url = reverse('shop:user-sabinet', args=[user.id])
+
+        return self.success_url
