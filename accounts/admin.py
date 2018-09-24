@@ -14,12 +14,7 @@ from .forms import UserAdminCreationForm, UserAdminChangeForm
 
 class ProfileItemInline(admin.TabularInline):
     model = Profile
-    raw_id_field = ['full_name',
-                        'phone',
-                        'address',
-                        'postal_code',
-                        'city',
-                    ]
+    raw_id_field = [ 'phone',]
 
 
 class UserAdmin(BaseUserAdmin):
