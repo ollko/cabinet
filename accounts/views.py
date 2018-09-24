@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import TemplateView, FormView, UpdateView
+from django.views.generic import TemplateView, FormView, UpdateView, CreateView
 
 from django.contrib.auth.views import LoginView
 
@@ -131,3 +131,29 @@ class ProfileUpdateView(UpdateView):
         self.success_url = reverse('shop:user-sabinet', args=[user.id])
 
         return self.success_url
+
+
+class ProfileCreateView(CreateView):
+    model = Profile
+    form_class = ProfileForm
+    template_name = 'accounts/profile_update.html'
+
+
+    def form_valid(self, form):
+        """
+        If the form is valid, save the associated model.
+        """
+        profile = Profile.objects.create(
+                            user = self.request.user,
+                            phone = form.cleaned_data['phone'],
+                            )
+        profile.save()
+        return super(ProfileUpdateView, self).form_valid(form)
+
+
+    def get_success_url(self):
+        user = self.object
+        self.success_url = reverse('shop:user-sabinet', args=[user.id])
+
+        return self.success_url
+        CreateView

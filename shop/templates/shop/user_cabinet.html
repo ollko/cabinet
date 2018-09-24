@@ -23,8 +23,12 @@
     <a style="text-decoration:none" tabindex="0" data-toggle="popover" data-container="body" data-placement="top"  data-html="true" href="#" id="authUser" data-trigger="click hover"><span class="icon-user" ></span>{{ user.get_name_from_email }}</a>
     <div class="lead"><small>{{ user.profile }}</small></div>
 
-    <div id="popover-content-authUser" style="display: none">      
-      <a class="dropdown-item text-center" href="{% url 'accounts:change_profile' user.pk %}">сменить номер телефона</a>
+    <div id="popover-content-authUser" style="display: none">
+      {% if user.profile %}      
+        <a class="dropdown-item text-center" href="{% url 'accounts:change_profile' user.pk %}">сменить номер телефона</a>
+      {% else %}
+        <a class="dropdown-item text-center" href="{% url 'accounts:create_profile' %}">указать номер телефона</a>
+      {% endif %}
       <div class="dropdown-divider"></div>
       <a class="dropdown-item text-center" href="{% url 'accounts:change_password' %}">сменить пароль</a>
       <div class="dropdown-divider"></div>

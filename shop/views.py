@@ -18,7 +18,6 @@ class UserCabinetDetailView(FormMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         if not request.user == self.get_object():
-            print (not request.user == self.get_object())
             raise Http404('У вас нет прав для просмотра этой страницы')
 
         return super(UserCabinetDetailView, self).get(request, *args, **kwargs)

@@ -14,10 +14,7 @@
             {% csrf_token %}
             {{ form|crispy }}
             
-        </div>
-        {% if form.errors %}
-            <div class="text-left text-danger">Электронный адрес либо пароль указаны неверно. Попробуйте еще раз.</div>
-        {% endif %}          
+        </div>         
         <div class="row">
             <div class="col-md-5 col-sm-12">
                 <button type="submit" class="btn btn-success">Войти</button>         

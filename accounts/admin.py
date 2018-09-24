@@ -15,11 +15,12 @@ from .forms import UserAdminCreationForm, UserAdminChangeForm
 class ProfileItemInline(admin.TabularInline):
     model = Profile
     raw_id_field = ['full_name',
-                    'phone',
-                    'address',
-                    'postal_code',
-                    'city',
+                        'phone',
+                        'address',
+                        'postal_code',
+                        'city',
                     ]
+
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
