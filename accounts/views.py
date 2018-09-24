@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model, authenticate, login
 User = get_user_model()
 
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 
@@ -127,7 +127,8 @@ class ProfileUpdateView(UpdateView):
     template_name = 'accounts/profile_update.html'
 
     def get_success_url(self):
-        user = self.object
+        user = self.object.user
+        print(user)
         self.success_url = reverse('shop:user-sabinet', args=[user.id])
 
         return self.success_url
@@ -143,16 +144,19 @@ class ProfileCreateView(CreateView):
         """
         If the form is valid, save the associated model.
         """
-        profile = Profile.objects.create(
-                            user = self.request.user,
-                            phone = form.cleaned_data['phone'],
-                            )
-        profile.save()
-        return super(ProfileUpdateView, self).form_valid(form)
+        # profile = Profile.objects.create(
+        #                     user = self.request.user,
+        #                     phone = form.cleaned_data['phone'],
+        #                     )
+        self.object = form.save(commit = False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+        # return super(ProfileCreateView, self).form_valid(form)
 
 
     def get_success_url(self):
-        user = self.object
+        user = self.object.user
         self.success_url = reverse('shop:user-sabinet', args=[user.id])
 
         return self.success_url
